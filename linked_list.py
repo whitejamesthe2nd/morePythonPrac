@@ -45,10 +45,18 @@ class LinkedList:
 
   # TODO: Implement the get_node method here
   def get_node(self, position):
-    if position == 0:
-      return self._head
-    elif position >self._length:
+    if position >self._length:
       return
+    cur_node = self._head
+    spot = 0
+    if cur_node == None:
+      return
+    while cur_node._next:
+      if spot == position:
+        return cur_node
+      cur_node = cur_node._next
+      spot += 1
+
 
 
 
@@ -134,11 +142,26 @@ class LinkedList:
 
   # TODO: Implement the update_value method here
   def update_value(self, position, value):
-    pass
+    if self._length < position or position < 0:
+      return False
+    if position == 0:
+     self._head._value = value
+    if position == self._length:
+      self._tail._value = value
 
   # TODO: Implement the remove_node method here
   def remove_node(self, position):
-    pass
+    cur_node = self._head
+    i = 0
+    while i < position:
+      prev_node = cur_node
+      i+=1
+      cur_node = cur_node._next
+      if position == i:
+        if not(cur_node._next):
+          prev_node._next = None
+        prev_node._next = cur_node._next
+        cur_node._next= None
 
   # # TODO: Implement the __str__ method here
   # def __str__(self):
@@ -193,13 +216,14 @@ linked_list.insert_value(0, 'hello!')
 print(linked_list.get_node(0)._value)                   # `hello!`
 
 # # 3. Test updating a list node's value at a specific position
-# linked_list.update_value(0, 'goodbye!')
-# print(linked_list.get_node(0)._value)                   # `goodbye!`
+linked_list.update_value(0, 'goodbye!')
+print(linked_list.get_node(0)._value)                   # `goodbye!`
 
 # # 4. Test removing a node value from the list at a specific position
-# print(linked_list.get_node(1)._value)                   # `new head node`
-# linked_list.remove_node(1)
-# print(linked_list.get_node(1))                          # None
+print(len(linked_list))
+print(linked_list.get_node(1)._value)                   # `new head node`
+linked_list.remove_node(1)
+print(linked_list.get_node(1))                          # None
 
 # # 5. Format the list as a string whenever `print()` is invoked
 # new_linked_list = LinkedList()
